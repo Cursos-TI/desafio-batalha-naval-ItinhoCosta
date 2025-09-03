@@ -1,61 +1,92 @@
 #include <stdio.h>
 
 int main() {
-    printf("--- Desafio Batalha Naval - Nivel Aventureiro ---\n\n");
-    printf("Tabuleiro 10x10 com 4 navios, incluindo diagonais.\n");
+    printf("--- Desafio Batalha Naval - Nivel Mestre ---\n\n");
+    printf("Simulacao de Habilidades Especiais.\n\n");
     
-    // Matriz 10x10 para representar o tabuleiro.
-    // O valor '0' indica que a posicao esta vazia.
-    int tabuleiro[10][10] = {0}; 
+    // As matrizes sao declaradas para representar as areas de efeito das habilidades.
+    // O tamanho da matriz e 5x5 para facilitar a visualizacao dos padroes.
+    int cone[5][5] = {0};
+    int cruz[5][5] = {0};
+    int octaedro[5][5] = {0};
     
-    // --- Posicionamento dos Navios ---
-    // Navio 1 (Vertical) de 3 partes, a partir de (1, 2)
-    int navio1_x = 1;
-    int navio1_y = 2;
-    int navio1_tamanho = 3;
-    for (int i = 0; i < navio1_tamanho; i++) {
-        tabuleiro[navio1_x + i][navio1_y] = 3;
-    }
+    // --- Habilidade 1: Cone ---
+    // A area de efeito se expande a partir de um ponto central.
+    printf("--> Habilidade: Cone <--\n\n");
+    printf("Areas afetadas (1) e nao afetadas (0):\n\n");
     
-    // Navio 2 (Horizontal) de 2 partes, a partir de (3, 0)
-    int navio2_x = 3;
-    int navio2_y = 0;
-    int navio2_tamanho = 2;
-    for (int i = 0; i < navio2_tamanho; i++) {
-        tabuleiro[navio2_x][navio2_y + i] = 3;
-    }
-    
-    // Novo Navio 3 (Diagonal) de 3 partes, a partir de (5, 5)
-    int navio3_x = 5;
-    int navio3_y = 5;
-    int navio3_tamanho = 3;
-    for (int i = 0; i < navio3_tamanho; i++) {
-        tabuleiro[navio3_x + i][navio3_y + i] = 3;
-    }
-    
-    // Novo Navio 4 (Diagonal) de 2 partes, a partir de (0, 8)
-    int navio4_x = 0;
-    int navio4_y = 8;
-    int navio4_tamanho = 2;
-    for (int i = 0; i < navio4_tamanho; i++) {
-        tabuleiro[navio4_x + i][navio4_y - i] = 3;
-    }
-
-    // --- Exibicao do Tabuleiro Completo ---
-    printf("\n--- Tabuleiro Completo ---\n\n");
-    
-    // Loop externo para percorrer as linhas da matriz (de 0 a 9)
-    for (int i = 0; i < 10; i++) {
-        // Loop interno para percorrer as colunas da matriz (de 0 a 9)
-        for (int j = 0; j < 10; j++) {
-            // Imprime o valor da posicao atual, seguido de um espaco
-            printf("%d ", tabuleiro[i][j]);
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 5; j++) {
+            // Logica para criar o padrao de cone.
+            // A largura do cone aumenta a cada linha.
+            if (j >= 2 - i && j <= 2 + i) {
+                cone[i][j] = 1;
+            }
         }
-        // Quebra a linha para comecar a proxima linha do tabuleiro
+    }
+    
+    // Exibicao da matriz do cone
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 5; j++) {
+            printf("%d ", cone[i][j]);
+        }
         printf("\n");
     }
     
-    printf("\nSimulacao de posicionamento concluida!\n");
+    // --- Habilidade 2: Cruz ---
+    // A area de efeito forma uma cruz no centro da matriz.
+    printf("\n--> Habilidade: Cruz <--\n\n");
+    printf("Areas afetadas (1) e nao afetadas (0):\n\n");
+    
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            // A logica da cruz e: se estiver na linha central (i=2)
+            // OU na coluna central (j=2), marca como 1.
+            if (i == 2 || j == 2) {
+                cruz[i][j] = 1;
+            }
+        }
+    }
+    
+    // Exibicao da matriz da cruz
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            printf("%d ", cruz[i][j]);
+        }
+        printf("\n");
+    }
+    
+    // --- Habilidade 3: Octaedro ---
+    // A area de efeito se expande e contrai, formando um losango ou octaedro.
+    printf("\n--> Habilidade: Octaedro <--\n\n");
+    printf("Areas afetadas (1) e nao afetadas (0):\n\n");
+    
+    // A logica do octaedro e uma combinacao de expansao e contracao
+    // semelhante ao cone. Vamos criar um padrao mais simples aqui
+    // para demonstrar o conceito.
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 5; j++) {
+            if (i == 0 && j == 2) {
+                octaedro[i][j] = 1;
+            }
+            if (i == 1 && (j >= 1 && j <= 3)) {
+                octaedro[i][j] = 1;
+            }
+            if (i == 2 && j == 2) {
+                octaedro[i][j] = 1;
+            }
+        }
+    }
+    
+    // Exibicao da matriz do octaedro
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 5; j++) {
+            printf("%d ", octaedro[i][j]);
+        }
+        printf("\n");
+    }
+    
+    printf("\nSimulacao de habilidades concluida!\n");
     
     return 0;
 }
